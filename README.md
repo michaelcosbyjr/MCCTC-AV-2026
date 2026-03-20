@@ -74,6 +74,20 @@ Hashes were sourced from [MalwareBazaar](https://bazaar.abuse.ch/) and known pub
 
 ---
 
+Here you go, just copy and paste this:
+### Clone & Build
+git clone https://github.com/michaelcosbyjr/MCCTC_Capstone2026_antivirus.git
+cd MCCTC_Capstone2026_antivirus
+go build -o astra-av.exe .
+### Usage
+**Scan a single file (hash only):**
+.\astra-av.exe scan --file suspicious.exe
+**Scan a directory:**
+.\astra-av.exe scan --dir .\samples
+**Add a hash to the signature database:**
+.\astra-av.exe add-hash --hash <sha256> --name "WannaCry Ransomware"
+
+
 ## Disclaimer
 
 This project is for **educational purposes only** as part of a high school senior capstone. No actual malware samples are included in this repository. All hashes are references to known malware and are safe to store as plain text.
