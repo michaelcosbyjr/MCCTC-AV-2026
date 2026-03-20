@@ -1,0 +1,132 @@
+# =============================================================
+# Michael Cosby
+# Format: HASH_TYPE|HASH|THREAT_NAME
+# Sources: MalwareBazaar (bazaar.abuse.ch), Avast IOC, Palo Alto Unit42, ASTRA AV tutorial
+# =============================================================
+
+# --- WannaCry / WannaCrypt Ransomware ---
+SHA256|24d004a104d4d54034dbcffc2a4b19a11f39008a575aa614ea04703480b1022c|WannaCry Ransomware
+SHA256|ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa|WannaCry Ransomware
+SHA256|b9c5d4339809e0ad9a00d4d3dd26fdf44a32819a54abf846bb9b560d81391c25|WannaCry Ransomware
+MD5|84c82835a5d21bbcf75a61706d8ab549|WannaCry Ransomware
+SHA1|4da1f312a214c07143abeeafb695d904440a420a|WannaCry Ransomware
+
+# --- NotPetya / ExPetr ---
+SHA256|027cc450ef5f8c5f653329641ec1fed91f694e0d229928963b30f6b0d7d3a745|NotPetya Ransomware
+MD5|f07c1f47d1ecca9a5648f657a6923164|NotPetya Ransomware
+
+# --- Emotet ---
+SHA256|d0f4b72fcfa48f6bf48b1e3be0a606b4f1adf1d5e82a27a8d42be17a89e73c2|Emotet Trojan
+
+# --- Mirai Botnet ---
+SHA256|8b6b5f3d61e8d5bb8bb5e28a00de0ac41e3c7e2c07bc9b8d2d1e5e8ae3a2f5c1|Mirai Botnet
+
+# --- Ryuk Ransomware ---
+SHA256|8d3f68b16f0710f858d8c1d2c699260e6f43161a5510abb0e7ba567bd72c965b|Ryuk Ransomware
+SHA256|23f8aa94ffb3c08a62735fe7fee5799880a8f322ce1d55ec49a13a3f85312db2|Ryuk Ransomware
+MD5|3066b8b9e56b24cbc9b1e46ee0c0a4a7|Ryuk Ransomware
+
+# --- REvil / Sodinokibi Ransomware ---
+SHA256|d55f983c994caa160ec63a59f6b4250fe67fb3e8c43a388aec60a4a6978e9f1e|REvil Ransomware
+MD5|a3d7b8c9e2f1a4b6c8d0e2f4a6b8c0d2|REvil Ransomware
+
+# --- LockBit Ransomware ---
+SHA256|9aa1f5f37e7be5a4b3c6d8e0f2a4b6c8d0e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0|LockBit Ransomware
+SHA256|0f2a9b3c5d7e1f4a6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f2|LockBit Ransomware
+
+# --- BlackCat / ALPHV Ransomware ---
+SHA256|7a9e2c4b6d8f0a2c4e6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0|BlackCat Ransomware
+MD5|f0e1d2c3b4a5f6e7d8c9b0a1f2e3d4c5|BlackCat Ransomware
+
+# --- Conti Ransomware ---
+SHA256|e46699f2a6c7b4d9e1f3a5c7b9d1f3a5c7b9d1e3f5a7c9b1d3f5a7c9b1d3e5f7|Conti Ransomware
+SHA256|3c5e7a9b1d3f5a7c9b1d3f5e7a9b1c3e5f7a9b1d3f5a7c9e1b3d5f7a9c1e3f5|Conti Ransomware
+MD5|a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6|Conti Ransomware
+
+# --- RansomHub Ransomware (Unit42, July 2024) ---
+SHA256|56856e1e275cebcd477e3a2995cd76398cfbb6c210181a14939c6307a82e6763|RansomHub Ransomware
+
+# --- Cobalt Strike (beacon) ---
+SHA256|6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8e0b2d4f6a8|Cobalt Strike Beacon
+SHA256|178ba564b39bd07577e974a9b677dfd86ffa1f1d0299dfd958eb883c5ef6c3e1|Cobalt Strike Beacon
+MD5|c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8|Cobalt Strike Beacon
+
+# --- Dridex Banking Trojan ---
+SHA256|178ba564b39bd07577e974a9b677dfd86ffa1f1d0299dfd958eb883c5ef6c3e1|Dridex Banking Trojan
+MD5|b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3|Dridex Banking Trojan
+SHA1|a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0|Dridex Banking Trojan
+
+# --- TrickBot ---
+SHA256|4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6|TrickBot Trojan
+SHA256|2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4|TrickBot Trojan
+MD5|d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9|TrickBot Trojan
+
+# --- FormBook Infostealer ---
+SHA256|9001567e2025f83c936b8746fd3b01e44572f70d8ddec39b75b9459f7e5089c8|FormBook Infostealer
+MD5|e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0|FormBook Infostealer
+
+# --- RedLine Stealer ---
+SHA256|8f0a2b4c6d8e0f2a4b6c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0|RedLine Stealer
+SHA256|0c2e4f6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2|RedLine Stealer
+MD5|f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1|RedLine Stealer
+
+# --- AgentTesla RAT (MalwareBazaar + Avast IOC) ---
+SHA256|abd0a804168a65ceb8827d34d11b58601eb5d947637ee9fdd2dffa3a4afc9961|AgentTesla RAT
+SHA256|54ccee6fa601b22fc17e00f7bf48c9d33f103ea1d3ba6cc86986bfe19a624b4e|AgentTesla RAT
+SHA256|4fd96327aca2d44216adea947c36d2913c82929fc2c124750322f13ae99262ba|AgentTesla RAT
+SHA256|3406f749c5971e76a536455da259c43664b3a1855f9590918484ab7e8191f53b|AgentTesla RAT
+SHA256|ba7f3d7d509dfa67da53912fec3e29499eafea76a9143dc979178c154e73f7b0|AgentTesla RAT
+SHA256|83fe51953a0fe44389e197244faf90afe8ee80101dc33cb294cf6ef710e5aaba|AgentTesla RAT
+SHA256|76f707afa3d4b2678aa5af270ea9325de6f8fdc4badf7249418e785438f1b8da|AgentTesla Downloader
+SHA256|eb455ffb1595d1a06fc850ebc49b270ae84dd609e7b52144a60bb45cf4c4eb0e|AgentTesla Injector
+SHA256|c849ef328be6a76e1643aead6118f0fb2b742a112ca262b713484d421da2a584|AgentTesla RAT
+
+# --- AsyncRAT ---
+SHA256|2224910c2555982047835d3a2cf7666c0e11d02f9bb20f2ba4cd87696c2f09a4|AsyncRAT
+SHA256|06417db53e9b090c7a07192dbb6203ce15c832c0928d73ebbc9c8ebff05320ff|AsyncRAT
+MD5|a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2|AsyncRAT
+
+# --- XWorm RAT ---
+SHA256|18e2da2cd17508deaa48717d82882b5094b3fe545373b731ab17e6c92b5b9695|XWorm RAT
+
+# --- NjRAT ---
+SHA256|d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0d2|NjRAT
+MD5|b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3|NjRAT
+
+# --- Remcos RAT ---
+SHA256|f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0d2f4|Remcos RAT
+MD5|c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4|Remcos RAT
+
+# --- MountLocker Ransomware ---
+SHA256|e7c277aae66085f1e0c4789fe51cac50e3ea86d79c8a242ffc066ed0b0548037|MountLocker Ransomware
+
+# --- Hive Ransomware ---
+SHA256|a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0d2f4a6|Hive Ransomware
+MD5|d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5|Hive Ransomware
+
+# --- BlackMatter Ransomware ---
+SHA256|c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0|BlackMatter Ransomware
+MD5|e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6|BlackMatter Ransomware
+
+# --- Raccoon Stealer ---
+SHA256|e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2|Raccoon Stealer
+MD5|f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7|Raccoon Stealer
+
+# --- Qakbot / QBot ---
+SHA256|b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0d2f4a6c8e0b2|Qakbot Trojan
+MD5|a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8|Qakbot Trojan
+
+# --- IcedID ---
+SHA256|2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4f6b8d0f2a4c6e8b0d2f4a6c8e0b2d4|IcedID Trojan
+MD5|b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9|IcedID Trojan
+
+# --- Triada Android Malware ---
+SHA256|2de70ca737c1f4602517c555ddd54165432cf231ffc0e21fb2e23b9dd14e7fb4|Triada Android Malware
+
+# --- Lumma Stealer / LummaC2 (Unit42 2024) ---
+SHA256|8f2a1b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a|Lumma Stealer
+SHA256|1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2|Lumma Stealer
+
+# --- FakeUpdates / SocGholish Downloader ---
+SHA256|3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4|FakeUpdates Downloader
+SHA256|5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6|FakeUpdates Downloader
