@@ -15,6 +15,11 @@ import (
 	"time"
 )
 
+// ============================================================
+// MCCTC AV Engine Hash + YARA Detection
+// scanner/hash_scanner.go — Core scanning logic
+// ============================================================
+
 // Verdict represents the outcome of a file scan.
 type Verdict string
 
@@ -139,7 +144,6 @@ func hashFile(path string) (md5sum, sha1sum, sha256sum string, err error) {
 	hSHA1 := sha1.New()
 	hSHA256 := sha256.New()
 
-	// Write to all three hashers in one pass using io.MultiWriter
 	multi := io.MultiWriter([]io.Writer{hMD5, hSHA1, hSHA256}...)
 	if _, err := io.Copy(multi, f); err != nil {
 		return "", "", "", fmt.Errorf("could not hash file: %w", err)
@@ -162,7 +166,6 @@ func ScanFile(path string, db *SignatureDB, ys *YaraScanner) ScanResult {
 		Verdict:  VerdictClean,
 	}
 
-	// ── Hash-based detection ─────────────────────────────
 	md5sum, sha1sum, sha256sum, err := hashFile(path)
 	if err != nil {
 		result.Error = err
@@ -221,7 +224,7 @@ func ScanDirectory(root string, db *SignatureDB, ys *YaraScanner) []ScanResult {
 				Verdict:  VerdictError,
 				Error:    err,
 			})
-			return nil // continue walking
+			return nil
 		}
 		if info.IsDir() {
 			return nil
