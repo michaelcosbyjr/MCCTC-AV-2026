@@ -12,9 +12,6 @@ import (
 )
 
 // ============================================================
-// MCCTC AV Engine — Episode 3: String & API Heuristics
-// main.go — CLI entry point
-// ============================================================
 
 const version = "0.3.0"
 
