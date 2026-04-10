@@ -71,12 +71,12 @@ MCCTC-AV-2026/
 ├── main.go
 ├── go.mod
 ├── scanner/
-│   ├── hash_scanner.go       # Episode 1 — hash detection
-│   ├── yara.go               # Episode 2 — YARA rule scanning
-│   ├── heuristics.go         # Episode 3 — string & API heuristics
-│   ├── pe_scanner.go         # Episode 4 — PE header analysis
-│   ├── entropy_scanner.go    # Episode 5 — entropy analysis
-│   └── fuzzy_scanner.go      # Episode 6 — fuzzy hashing
+│   ├── hash_scanner.go       # Part 1 — hash detection
+│   ├── yara.go               # Part 2 — YARA rule scanning
+│   ├── heuristics.go         # Part 3 — string & API heuristics
+│   ├── pe_scanner.go         # Part 4 — PE header analysis
+│   ├── entropy_scanner.go    # Part 5 — entropy analysis
+│   └── fuzzy_scanner.go      # Part 6 — fuzzy hashing
 ├── rules/
 │   └── malware_generic.yar   # YARA detection rules
 └── signatures/
