@@ -1,3 +1,2 @@
-module github.com/michaelcosbyjr/MCCTC_Capstone2026_antivirus
-
+module github.com/michaelcosbyjr/MCCTC-AV-2026
 go 1.21
