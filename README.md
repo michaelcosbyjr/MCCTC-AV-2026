@@ -31,17 +31,19 @@ This project was built by following the **ASTRA Labs AV Engine** YouTube series 
 
 ---
 
+
+```
 ## What's In the AV
 
-| Feature | Status |
-|---------|---------|--------|
+| # | Feature | Status |
+|---|---------|--------|
 | 1 | Hash-based detection (MD5, SHA-1, SHA-256) | ✅ Complete |
 | 2 | YARA rule scanning | ✅ Complete |
 | 3 | String & API heuristics | ✅ Complete |
 | 4 | PE header & section analysis | ✅ Complete |
 | 5 | Entropy analysis (packed/encrypted file detection) | ✅ Complete |
 | 6 | Fuzzy hashing (ssdeep/TLSH) | ✅ Complete |
-
+```
 ---
 
 ## How It Works
