@@ -1,4 +1,4 @@
-# 🛡️ MCCTC AV — Antivirus Engine
+# MCCTC AV — Antivirus Engine
 
 > **Senior Capstone Project** — Built in Go, inspired by the ASTRA Labs open-source AV series.
 
