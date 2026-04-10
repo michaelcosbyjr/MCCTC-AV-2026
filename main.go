@@ -8,12 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/michaelcosbyjr/MCCTC_Capstone2026_antivirus/scanner"
+	"github.com/michaelcosbyjr/MCCTC-AV-2026/scanner"
 )
 
-// ============================================================
 
-const version = "0.3.0"
+const version = "0.6.0"
 
 func defaultSigDB() string {
 	exe, err := os.Executable()
@@ -21,6 +20,14 @@ func defaultSigDB() string {
 		return filepath.Join("signatures", "hashes.txt")
 	}
 	return filepath.Join(filepath.Dir(exe), "signatures", "hashes.txt")
+}
+
+func defaultFuzzyDB() string {
+	exe, err := os.Executable()
+	if err != nil {
+		return filepath.Join("signatures", "fuzzy.txt")
+	}
+	return filepath.Join(filepath.Dir(exe), "signatures", "fuzzy.txt")
 }
 
 func defaultRulesDir() string {
@@ -35,7 +42,7 @@ func printBanner() {
 	fmt.Println(strings.Repeat("=", 60))
 	fmt.Printf(" MCCTC AV Engine v%s\n", version)
 	fmt.Println(" Michael Cosby — Senior Capstone 2026")
-	fmt.Println(" Detection: Hash Signatures + YARA Rules + Heuristics")
+	fmt.Println(" Detection: Hash | YARA | Heuristics | PE | Entropy | Fuzzy")
 	fmt.Println(strings.Repeat("=", 60))
 	fmt.Println()
 }
@@ -63,7 +70,6 @@ func printResult(r scanner.ScanResult) {
 		} else {
 			fmt.Printf("     Also matched %d YARA rule(s):\n", len(r.YaraMatches))
 		}
-
 		for _, m := range r.YaraMatches {
 			tags := ""
 			if len(m.Tags) > 0 {
@@ -94,13 +100,11 @@ func printHeuristicResult(h scanner.HeuristicResult) {
 		fmt.Printf(" [ERR] Heuristics on %s: %v\n\n", h.FilePath, h.Error)
 		return
 	}
-
 	if h.Detected() {
 		fmt.Printf(" [!] DETECTED (Heuristics) — %s\n", h.FilePath)
 		fmt.Printf("     %-10s: %s\n", "Verdict", "SUSPICIOUS")
 		fmt.Printf("     %-10s: %d / %d threshold\n\n", "Score", h.Score, scanner.HeuristicThreshold)
 
-		// Group matches by category
 		byCategory := make(map[string][]scanner.HeuristicMatch)
 		var categoryOrder []string
 		for _, m := range h.Matches {
@@ -121,16 +125,75 @@ func printHeuristicResult(h scanner.HeuristicResult) {
 	}
 }
 
-func printSummary(results []scanner.ScanResult, hResults []scanner.HeuristicResult, elapsed time.Duration) {
-	total, hashDetected, yaraDetected, heuristicDetected, errors := 0, 0, 0, 0, 0
+func printPEResult(r scanner.PEResult) {
+	if r.Error != nil {
+		fmt.Printf(" [ERR] PE analysis on %s: %v\n\n", r.FilePath, r.Error)
+		return
+	}
+	if !r.IsPE {
+		return // not a PE file, stay quiet
+	}
+	if r.Suspicious {
+		fmt.Printf(" [!] DETECTED (PE Analysis) — %s\n", r.FilePath)
+		for _, f := range r.Findings {
+			fmt.Printf("     [%s][%s] %s\n", f.Severity, f.Category, f.Detail)
+		}
+		fmt.Println()
+	}
+}
+
+func printEntropyResult(r scanner.EntropyResult) {
+	if r.Error != nil {
+		fmt.Printf(" [ERR] Entropy analysis on %s: %v\n\n", r.FilePath, r.Error)
+		return
+	}
+	if r.Suspicious {
+		fmt.Printf(" [!] DETECTED (Entropy) — %s\n", r.FilePath)
+		fmt.Printf("     Overall entropy: %.4f\n", r.OverallEntropy)
+		for _, f := range r.Findings {
+			fmt.Printf("     [%s][%s] %s\n", f.Severity, f.Section, f.Detail)
+		}
+		if len(r.SectionEntropy) > 0 {
+			fmt.Println("     Section breakdown:")
+			for _, s := range r.SectionEntropy {
+				fmt.Printf("       %-12s %.4f\n", s.Name, s.Entropy)
+			}
+		}
+		fmt.Println()
+	}
+}
+
+func printFuzzyResult(r scanner.FuzzyResult) {
+	if r.Error != nil {
+		// ssdeep not installed — warn once but don't spam
+		return
+	}
+	if r.Suspicious {
+		fmt.Printf(" [!] DETECTED (Fuzzy Hash) — %s\n", r.FilePath)
+		for _, m := range r.Matches {
+			fmt.Printf("     [FUZZY] %s — similarity: %d%%\n", m.ThreatName, m.Score)
+		}
+		fmt.Println()
+	}
+}
+
+func printSummary(
+	results []scanner.ScanResult,
+	hResults []scanner.HeuristicResult,
+	peResults []scanner.PEResult,
+	entropyResults []scanner.EntropyResult,
+	fuzzyResults []scanner.FuzzyResult,
+	elapsed time.Duration,
+) {
+	total, hashDet, yaraDet, heurDet, peDet, entropyDet, fuzzyDet, errors := 0, 0, 0, 0, 0, 0, 0, 0
 
 	for _, r := range results {
 		total++
 		if r.Detected {
-			hashDetected++
+			hashDet++
 		}
 		if len(r.YaraMatches) > 0 {
-			yaraDetected++
+			yaraDet++
 		}
 		if r.Error != nil {
 			errors++
@@ -140,21 +203,41 @@ func printSummary(results []scanner.ScanResult, hResults []scanner.HeuristicResu
 		if h.Error != nil {
 			errors++
 		} else if h.Detected() {
-			heuristicDetected++
+			heurDet++
 		}
 	}
+	for _, p := range peResults {
+		if p.Suspicious {
+			peDet++
+		}
+	}
+	for _, e := range entropyResults {
+		if e.Suspicious {
+			entropyDet++
+		}
+	}
+	for _, f := range fuzzyResults {
+		if f.Suspicious {
+			fuzzyDet++
+		}
+	}
+
+	totalDetections := hashDet + yaraDet + heurDet + peDet + entropyDet + fuzzyDet
 
 	fmt.Println()
 	fmt.Println(strings.Repeat("-", 60))
 	fmt.Printf(" Scan complete         : %s\n", elapsed.Round(time.Millisecond))
 	fmt.Printf(" Files scanned         : %d\n", total)
-	fmt.Printf(" Hash detections       : %d\n", hashDetected)
-	fmt.Printf(" YARA detections       : %d\n", yaraDetected)
-	fmt.Printf(" Heuristic detections  : %d\n", heuristicDetected)
+	fmt.Printf(" Hash detections       : %d\n", hashDet)
+	fmt.Printf(" YARA detections       : %d\n", yaraDet)
+	fmt.Printf(" Heuristic detections  : %d\n", heurDet)
+	fmt.Printf(" PE detections         : %d\n", peDet)
+	fmt.Printf(" Entropy detections    : %d\n", entropyDet)
+	fmt.Printf(" Fuzzy detections      : %d\n", fuzzyDet)
 	fmt.Printf(" Errors                : %d\n", errors)
 	fmt.Println(strings.Repeat("-", 60))
 
-	if hashDetected+yaraDetected+heuristicDetected > 0 {
+	if totalDetections > 0 {
 		fmt.Println("\n *** THREATS DETECTED — DO NOT EXECUTE FLAGGED FILES ***")
 	} else {
 		fmt.Println("\n No threats detected.")
@@ -169,7 +252,11 @@ func main() {
 	scanDir          := scanCmd.String("dir", "", "Path to a directory to scan recursively")
 	scanDB           := scanCmd.String("db", defaultSigDB(), "Path to signature database")
 	scanRules        := scanCmd.String("rules", "", "Path to a YARA rule file or directory (optional)")
-	scanNoHeuristics := scanCmd.Bool("no-heuristics", false, "Disable string & API heuristic scanning")
+	scanFuzzyDB      := scanCmd.String("fuzzy-db", defaultFuzzyDB(), "Path to fuzzy hash database")
+	scanNoHeuristics := scanCmd.Bool("no-heuristics", false, "Disable heuristic scanning")
+	scanNoPE         := scanCmd.Bool("no-pe", false, "Disable PE header analysis")
+	scanNoEntropy    := scanCmd.Bool("no-entropy", false, "Disable entropy analysis")
+	scanNoFuzzy      := scanCmd.Bool("no-fuzzy", false, "Disable fuzzy hash scanning")
 
 	addCmd  := flag.NewFlagSet("add-hash", flag.ExitOnError)
 	addHash := addCmd.String("hash", "", "Hash value to add")
@@ -179,8 +266,8 @@ func main() {
 
 	if len(os.Args) < 2 {
 		fmt.Fprintln(os.Stderr, "Usage:")
-		fmt.Fprintln(os.Stderr, "  mcctc-av scan --file <path> [--rules <path>] [--no-heuristics]")
-		fmt.Fprintln(os.Stderr, "  mcctc-av scan --dir  <path> [--rules <path>] [--no-heuristics]")
+		fmt.Fprintln(os.Stderr, "  mcctc-av scan --file <path> [--rules <path>] [--no-heuristics] [--no-pe] [--no-entropy] [--no-fuzzy]")
+		fmt.Fprintln(os.Stderr, "  mcctc-av scan --dir  <path> [--rules <path>]")
 		fmt.Fprintln(os.Stderr, "  mcctc-av add-hash --hash <hash> --name <threat>")
 		os.Exit(1)
 	}
@@ -196,6 +283,7 @@ func main() {
 			os.Exit(1)
 		}
 
+		// Load hash signature database
 		db, err := scanner.LoadSignatures(*scanDB)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "[ERROR] %v\n", err)
@@ -217,16 +305,40 @@ func main() {
 			fmt.Println("[*] YARA scanning disabled (use --rules to enable)")
 		}
 
+		// Load fuzzy hash database (optional)
+		var fuzzyDB *scanner.FuzzyDB
+		if !*scanNoFuzzy {
+			fuzzyDB, err = scanner.LoadFuzzyDB(*scanFuzzyDB)
+			if err != nil {
+				fmt.Printf("[*] Fuzzy hash DB not found — fuzzy scanning disabled (%v)\n", err)
+				fuzzyDB = nil
+			} else {
+				fmt.Printf("[*] Loaded %d fuzzy hashes from %s\n", fuzzyDB.Count(), *scanFuzzyDB)
+			}
+		} else {
+			fmt.Println("[*] Fuzzy hash scanning disabled")
+		}
+
+		// Print detection status
 		if !*scanNoHeuristics {
 			fmt.Printf("[*] Heuristics enabled (threshold: %d)\n", scanner.HeuristicThreshold)
 		} else {
 			fmt.Println("[*] Heuristics disabled")
 		}
+		if !*scanNoPE {
+			fmt.Println("[*] PE header analysis enabled")
+		}
+		if !*scanNoEntropy {
+			fmt.Println("[*] Entropy analysis enabled")
+		}
 		fmt.Println()
 
 		start := time.Now()
-		var results []scanner.ScanResult
+		var results         []scanner.ScanResult
 		var heuristicResults []scanner.HeuristicResult
+		var peResults        []scanner.PEResult
+		var entropyResults   []scanner.EntropyResult
+		var fuzzyResults     []scanner.FuzzyResult
 
 		if *scanFile != "" {
 			fmt.Printf("[*] Scanning file: %s\n\n", *scanFile)
@@ -238,14 +350,30 @@ func main() {
 
 		for _, r := range results {
 			printResult(r)
+
 			if !*scanNoHeuristics {
 				h := scanner.ScanHeuristics(r.FilePath)
 				heuristicResults = append(heuristicResults, h)
 				printHeuristicResult(h)
 			}
+			if !*scanNoPE {
+				p := scanner.ScanPE(r.FilePath)
+				peResults = append(peResults, p)
+				printPEResult(p)
+			}
+			if !*scanNoEntropy {
+				e := scanner.ScanEntropy(r.FilePath)
+				entropyResults = append(entropyResults, e)
+				printEntropyResult(e)
+			}
+			if !*scanNoFuzzy {
+				f := scanner.ScanFuzzy(r.FilePath, fuzzyDB)
+				fuzzyResults = append(fuzzyResults, f)
+				printFuzzyResult(f)
+			}
 		}
 
-		printSummary(results, heuristicResults, time.Since(start))
+		printSummary(results, heuristicResults, peResults, entropyResults, fuzzyResults, time.Since(start))
 
 	case "add-hash":
 		addCmd.Parse(os.Args[2:])
