@@ -1,0 +1,2 @@
+# MCCTC AV — Fuzzy Hash Database
+# Format: FUZZY_HASH|THREAT_NAME
