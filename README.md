@@ -6,7 +6,7 @@
 
 ## About This Project
 
-MCCTC AV is a command-line antivirus scanner built from scratch in Go for my **senior capstone project**. The goal was to go beyond just using security tools and actually understand how they work under the hood — how does an antivirus engine decide if a file is malicious? How does it scan thousands of files efficiently? What are its weaknesses?
+MCCTC AV is a command-line antivirus scanner built in Golang (Go) for my **senior capstone project**. The goal was to go beyond just using security tools and actually understand how they work under the hood — how does an antivirus engine decide if a file is malicious? How does it scan thousands of files efficiently? What are its weaknesses?
 
 This project gave me hands-on experience with:
 - Cryptographic hashing (MD5, SHA-1, SHA-256)
