@@ -31,10 +31,9 @@ This project was built by following the **ASTRA Labs AV Engine** YouTube series 
 
 ---
 
-
-```
 ## What's In the AV
 
+```
 | # | Feature | Status |
 |---|---------|--------|
 | 1 | Hash-based detection (MD5, SHA-1, SHA-256) | ✅ Complete |
@@ -44,6 +43,7 @@ This project was built by following the **ASTRA Labs AV Engine** YouTube series 
 | 5 | Entropy analysis (packed/encrypted file detection) | ✅ Complete |
 | 6 | Fuzzy hashing (ssdeep/TLSH) | ✅ Complete |
 ```
+
 ---
 
 ## How It Works
@@ -120,14 +120,12 @@ sudo apt install ssdeep
 
 ### Step 1 — Clone the repo
 ```
-```bash
 git clone https://github.com/michaelcosbyjr/MCCTC-AV-2026.git
 cd MCCTC-AV-2026
 ```
 
 ### Step 2 — Build the binary
 ```
-```bash
 go build -o mcctc-av.exe .
 ```
 
@@ -135,25 +133,21 @@ go build -o mcctc-av.exe .
 
 **Scan a single file (all detections enabled by default):**
 ```
-```bash
 .\mcctc-av.exe scan --file suspicious.exe
 ```
 
 **Scan a single file with YARA rules:**
 ```
-```bash
 .\mcctc-av.exe scan --file suspicious.exe --rules .\rules
 ```
 
 **Scan a full directory with all detections:**
 ```
-```bash
 .\mcctc-av.exe scan --dir .\samples --rules .\rules
 ```
 
 **Scan with specific layers disabled:**
 ```
-```bash
 .\mcctc-av.exe scan --file suspicious.exe --no-heuristics
 .\mcctc-av.exe scan --file suspicious.exe --no-pe
 .\mcctc-av.exe scan --file suspicious.exe --no-entropy
@@ -162,14 +156,62 @@ go build -o mcctc-av.exe .
 
 **Add a hash to the signature database:**
 ```
-```bash
 .\mcctc-av.exe add-hash --hash <sha256> --name "WannaCry Ransomware"
 ```
 
 **Add a hash with a specific type:**
 ```
-```bash
 .\mcctc-av.exe add-hash --hash <md5> --type MD5 --name "Emotet Trojan"
+```
+
+---
+
+### Linux / macOS
+
+### Step 1 — Clone the repo
+```
+git clone https://github.com/michaelcosbyjr/MCCTC-AV-2026.git
+cd MCCTC-AV-2026
+```
+
+### Step 2 — Build the binary
+```
+go build -o mcctc-av .
+```
+
+### Step 3 — Run your first scan
+
+**Scan a single file (all detections enabled by default):**
+```
+./mcctc-av scan --file suspicious
+```
+
+**Scan a single file with YARA rules:**
+```
+./mcctc-av scan --file suspicious --rules ./rules
+```
+
+**Scan a full directory with all detections:**
+```
+./mcctc-av scan --dir ./samples --rules ./rules
+```
+
+**Scan with specific layers disabled:**
+```
+./mcctc-av scan --file suspicious --no-heuristics
+./mcctc-av scan --file suspicious --no-pe
+./mcctc-av scan --file suspicious --no-entropy
+./mcctc-av scan --file suspicious --no-fuzzy
+```
+
+**Add a hash to the signature database:**
+```
+./mcctc-av add-hash --hash <sha256> --name "WannaCry Ransomware"
+```
+
+**Add a hash with a specific type:**
+```
+./mcctc-av add-hash --hash <md5> --type MD5 --name "Emotet Trojan"
 ```
 
 ---
@@ -177,12 +219,7 @@ go build -o mcctc-av.exe .
 ## Signature Database
 
 Hashes are stored in `signatures/hashes.txt` in a pipe-delimited format:
-### Linux / macOS
 
-### Step 1 — Clone the repo
-```bash
-git clone https://github.com/michaelcosbyjr/MCCTC-AV-2026.git
-cd MCCTC-AV-2026
 ```
 SHA256|24d004a104d4d54034dbcffc2a4b19a11f39008a575aa614ea04703480b1022c|WannaCry Ransomware
 MD5|84c82835a5d21bbcf75a61706d8ab549|WannaCry Ransomware
@@ -194,10 +231,6 @@ Hashes were sourced from [MalwareBazaar](https://bazaar.abuse.ch/), Avast public
 ---
 
 ## What I Learned
-### Step 2 — Build the binary
-```bash
-go build -o mcctc-av .
-```
 
 - How cryptographic hashing works and why it is used for file identification
 - How antivirus engines structure their signature databases
@@ -208,46 +241,23 @@ go build -o mcctc-av .
 - How fuzzy hashing identifies malware variants that evade exact hash matching
 - The limitations of each detection method and how malware evades them
 - How to build and maintain a public GitHub repository as a professional portfolio artifact
-### Step 3 — Run your first scan
 
 ---
-**Scan a single file (all detections enabled by default):**
-```bash
-./mcctc-av scan --file suspicious
-```
 
 ## Disclaimer
-**Scan a single file with YARA rules:**
-```bash
-./mcctc-av scan --file suspicious --rules ./rules
-```
 
 This project is for **educational purposes only** as part of a high school senior capstone. No actual malware samples are included in this repository. All hashes are references to known malware and are safe to store as plain text.
-**Scan a full directory with all detections:**
-```bash
-./mcctc-av scan --dir ./samples --rules ./rules
-```
 
 ---
-**Scan with specific layers disabled:**
-```bash
-./mcctc-av scan --file suspicious --no-heuristics
-./mcctc-av scan --file suspicious --no-pe
-./mcctc-av scan --file suspicious --no-entropy
-./mcctc-av scan --file suspicious --no-fuzzy
-```
 
 ## Credits
-**Add a hash to the signature database:**
-```bash
-./mcctc-av add-hash --hash <sha256> --name "WannaCry Ransomware"
-```
 
 - **ASTRA Labs** — for the open-source series this project is based on: [github.com/ASTRA-LabsHQ](https://github.com/ASTRA-LabsHQ)
 - **MalwareBazaar** — for the public malware hash dataset: [bazaar.abuse.ch](https://bazaar.abuse.ch/)
 - **Avast Threat Intelligence** — for public IOC data: [github.com/avast/ioc](https://github.com/avast/ioc)
 - **Palo Alto Networks Unit42** — for verified threat intelligence: [github.com/PaloAltoNetworks/Unit42-timely-threat-intel](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel)
-**Add a hash with a specific type:**
-```bash
-./mcctc-av add-hash --hash <md5> --type MD5 --name "Emotet Trojan"
 ```
+
+---
+
+If you want next level improvement, I can help you :contentReference[oaicite:0]{index=0} — that’s what really gets attention.
