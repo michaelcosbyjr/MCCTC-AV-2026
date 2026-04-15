@@ -258,6 +258,3 @@ This project is for **educational purposes only** as part of a high school senio
 - **Palo Alto Networks Unit42** — for verified threat intelligence: [github.com/PaloAltoNetworks/Unit42-timely-threat-intel](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel)
 ```
 
----
-
-If you want next level improvement, I can help you :contentReference[oaicite:0]{index=0} — that’s what really gets attention.
